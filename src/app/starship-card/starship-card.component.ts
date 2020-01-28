@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Starship } from '../interfaces/starship.interface';
 
 @Component({
   selector: 'app-starship-card',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StarshipCardComponent implements OnInit {
 
+  @Input() starShip: Starship;
   constructor() { }
 
   ngOnInit() {
