@@ -1,0 +1,19 @@
+@import '../../../variables.scss';
+
+:host {
+  width: 400px;
+
+  mat-card {
+    border: 2px solid transparent;
+
+    &.winner-card {
+      border-color: $sw-color;
+    }
+  }
+
+  .details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 16px;
+  }
+}

@@ -1,9 +1,7 @@
-@import '~@angular/material/theming';
-
-$background: mat-color($mat-grey, 900);
+@import 'variables.scss';
 
 html, body { height: 100%; }
-body { 
+body {
     margin: 0;
     background-color: $background;
 }

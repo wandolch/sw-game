@@ -1,4 +1,6 @@
-export interface Starship {
+import { Playable } from './playable.interface';
+
+export interface Starship  extends Playable {
   MGLT: string;
   cargo_capacity: string;
   consumables: string;

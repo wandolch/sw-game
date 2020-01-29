@@ -1,19 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
+import { Store } from '@ngxs/store';
 import { environment } from '../../environments/environment';
 import { API_URLS } from '../constants/api.constants';
 import { Starship } from '../interfaces/starship.interface';
 import { ResourcesResponse } from '../interfaces/resources-response.interface';
-import { DEFAULT_PAGE_SIZE } from '../constants/common.constants';
+import { CREATURE_COMPARABLE_ATTR, DEFAULT_PAGE_SIZE, RESOURCES, STARSHIP_COMPARABLE_ATTR } from '../constants/common.constants';
 import { Creature } from '../interfaces/creature.interface';
+import { SetStarships } from '../actions/set-starships.action';
+import { SetCreatures } from '../actions/set-creatures.action';
+import { ResourcesStoreService } from './resources.store.service';
 
+/**
+ * Requests and data preparation related logic
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ResourcesService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private resourcesStoreService: ResourcesStoreService,
+              private store: Store) {
   }
 
   /**
@@ -32,6 +41,7 @@ export class ResourcesService {
           forkJoin(requests).subscribe((responses: ResourcesResponse<Starship>[]) => {
             const starships = [...res.results];
             responses.forEach((data: ResourcesResponse<Starship>) => starships.push(...data.results));
+            this.store.dispatch(new SetStarships(this.filterInvalidByAttribute(starships, STARSHIP_COMPARABLE_ATTR)));
           });
         }
       });
@@ -49,9 +59,25 @@ export class ResourcesService {
           forkJoin(requests).subscribe((responses: ResourcesResponse<Creature>[]) => {
             const creatures = [...res.results];
             responses.forEach((data: ResourcesResponse<Creature>) => creatures.push(...data.results));
+            this.store.dispatch(new SetCreatures(this.filterInvalidByAttribute(creatures, CREATURE_COMPARABLE_ATTR)));
           });
         }
       });
+  }
+
+  public loadResourseIfNotLoaded(resource: string) {
+    switch (resource) {
+      case RESOURCES.STARSHIPS:
+        if (!this.resourcesStoreService.starships || !this.resourcesStoreService.starships.length) {
+          this.loadStarships();
+        }
+        break;
+      case RESOURCES.CREATURES:
+        if (!this.resourcesStoreService.creatures || !this.resourcesStoreService.creatures.length) {
+          this.loadCreatures();
+        }
+        break;
+    }
   }
 
   private getRequestsArray(pagesLeft: number, apiUrl: string): Observable<ResourcesResponse>[] {
@@ -61,5 +87,9 @@ export class ResourcesService {
       requests.push(this.http.get(`${environment.baseUrl + apiUrl}?page=${i + 2}`));
     }
     return requests;
+  }
+
+  private filterInvalidByAttribute<T>(arr: T[], attr: string) {
+    return arr.filter( (item: T) => !isNaN(+item[attr]));
   }
 }

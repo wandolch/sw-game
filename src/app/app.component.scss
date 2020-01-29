@@ -1,2 +1,22 @@
-@import '~@angular/material/theming';
+@import '../variables.scss';
+
+.sw-game {
+  color: white;
+  padding: 40px;
+
+  &__title {
+    color: $sw-color;
+    margin-bottom: 30px;
+  }
+
+  &__play-btn {
+    margin-left: 20px;
+  }
+
+  &__cards {
+    margin: 30px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+}
 

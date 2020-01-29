@@ -1,4 +1,6 @@
-export interface Creature {
+import { Playable } from './playable.interface';
+
+export interface Creature extends Playable {
   birth_year: string;
   created: string;
   edited: string;

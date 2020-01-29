@@ -1,0 +1,13 @@
+<mat-card *ngIf="creature" [ngClass]="{'winner-card': creature.winner}">
+    <mat-card-header>
+      <mat-card-title>{{ creature.name }}</mat-card-title>
+      <mat-card-subtitle>{{ creature.gender }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="mat-typography details-list">
+            <li class="mat-body-strong">Mass: {{ creature.mass }}</li>
+            <li>Height: {{ creature.height }}</li>
+            <li>Birth Year: {{ creature.birth_year }}</li>
+        </ul>
+    </mat-card-content>
+</mat-card>

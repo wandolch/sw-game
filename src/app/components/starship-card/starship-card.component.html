@@ -1,0 +1,13 @@
+<mat-card *ngIf="starship" [ngClass]="{'winner-card': starship.winner}">
+    <mat-card-header>
+      <mat-card-title>{{ starship.name }}</mat-card-title>
+      <mat-card-subtitle>{{ starship.manufacturer }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="mat-typography details-list">
+            <li class="mat-body-strong">Crew: {{ starship.crew }}</li>
+            <li>Model: {{ starship.model }}</li>
+            <li>Length: {{ starship.length }}</li>
+        </ul>
+    </mat-card-content>
+</mat-card>

@@ -1,3 +1,29 @@
-<main class="sw-game">
-
-</main>
+<div class="sw-game mat-typography">
+  <header>
+    <h1 class="sw-game__title mat-display-1">STAR WARS GAME</h1>
+    <mat-form-field>
+      <mat-label>Current resource</mat-label>
+      <mat-select [(value)]="selectedResource" (valueChange)="handleResourceChange($event)">
+        <mat-option *ngFor="let resource of resources | keyvalue" [value]="resource.value">
+          {{resource.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-stroked-button color="primary"
+            class="sw-game__play-btn"
+            [disabled]="!isCurrentResourceAvailable()"
+            (click)="handlePlay()">Play!</button>
+  </header>
+  <main>
+    <div class="sw-game__cards" *ngIf="selectedResource === resources.STARSHIPS else resourceCreatures">
+      <app-starship-card *ngFor='let starShip of resourcesStoreService.playedStarships$ | async' [starship]="starShip">
+      </app-starship-card>
+    </div>
+    <ng-template #resourceCreatures>
+      <div class="sw-game__cards">
+        <app-creature-card *ngFor='let creature of resourcesStoreService.playedCreatures$ | async' [creature]="creature">
+        </app-creature-card>
+      </div>
+    </ng-template>
+  </main>
+</div>
