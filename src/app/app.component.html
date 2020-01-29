@@ -11,18 +11,31 @@
     </mat-form-field>
     <button mat-stroked-button color="primary"
             class="sw-game__play-btn"
-            [disabled]="!isCurrentResourceAvailable()"
+            *ngIf="isCurrentResourceAvailable() else loading"
             (click)="handlePlay()">Play!</button>
+    <ng-template #loading>
+      <mat-progress-spinner color="primary"
+                            class="sw-game__spinner"
+                            [strokeWidth]="5"
+                            [diameter]="30"
+                            [mode]="'indeterminate'">
+      </mat-progress-spinner>
+    </ng-template>
   </header>
   <main>
     <div class="sw-game__cards" *ngIf="selectedResource === resources.STARSHIPS else resourceCreatures">
-      <app-starship-card *ngFor='let starShip of resourcesStoreService.playedStarships$ | async' [starship]="starShip">
-      </app-starship-card>
+      <div *ngFor="let starShip of appStoreService.playedStarships$ | async; let i = index">
+        <p>winnings: {{this.appStoreService.counter[i]}}</p>
+        <app-starship-card [starship]="starShip"></app-starship-card>
+      </div>
     </div>
+
     <ng-template #resourceCreatures>
       <div class="sw-game__cards">
-        <app-creature-card *ngFor='let creature of resourcesStoreService.playedCreatures$ | async' [creature]="creature">
-        </app-creature-card>
+        <div *ngFor="let creature of appStoreService.playedCreatures$ | async; let i = index">
+          <p>winnings: {{this.appStoreService.counter[i]}}</p>
+          <app-creature-card [creature]="creature"></app-creature-card>
+        </div>
       </div>
     </ng-template>
   </main>

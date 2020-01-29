@@ -6,4 +6,5 @@ export interface AppStateModel {
   creatures: Creature[];
   playedStarships: Starship[];
   playedCreatures: Creature[];
+  counter: number[];
 }

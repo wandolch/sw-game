@@ -18,5 +18,10 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &__spinner {
+    margin-left: 20px;
+    display: inline-block;
+  }
 }
 

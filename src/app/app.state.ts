@@ -5,6 +5,7 @@ import { SetCreatures } from './actions/set-creatures.action';
 import { SetPlayedStarships } from './actions/set-played-starships.action';
 import { SetPlayedCreatures } from './actions/set-played-creatures.action';
 import { ClearPlayed } from './actions/clear-played.action';
+import { IncreaseCounter } from './actions/increase-counter.action';
 
 @State<AppStateModel>({
   name: 'app',
@@ -12,7 +13,8 @@ import { ClearPlayed } from './actions/clear-played.action';
     starships: [],
     creatures: [],
     playedStarships: [],
-    playedCreatures: []
+    playedCreatures: [],
+    counter: [0, 0]
   }
 })
 export class AppState {
@@ -58,7 +60,19 @@ export class AppState {
     ctx.setState({
       ...state,
       playedStarships: [],
-      playedCreatures: []
+      playedCreatures: [],
+      counter: [0, 0]
+    });
+  }
+
+  @Action(IncreaseCounter)
+  increaseCounter(ctx: StateContext<AppStateModel>, action: IncreaseCounter) {
+    const state = ctx.getState();
+    const counter = [...state.counter];
+    counter[action.index]++;
+    ctx.setState({
+      ...state,
+      counter
     });
   }
 }

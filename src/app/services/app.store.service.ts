@@ -8,17 +8,19 @@ import { distinctUntilChanged } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ResourcesStoreService {
+export class AppStoreService {
 
   @Select(state => state.app.starships) starships$: Observable<Starship[]>;
   @Select(state => state.app.creatures) creatures$: Observable<Creature[]>;
   @Select(state => state.app.playedStarships) playedStarships$: Observable<Starship[]>;
   @Select(state => state.app.playedCreatures) playedCreatures$: Observable<Creature[]>;
+  @Select(state => state.app.counter) counter$: Observable<number[]>;
 
   public starships: Starship[];
   public creatures: Creature[];
   public playedStarships: Starship[];
   public playedCreatures: Creature[];
+  public counter: number[];
 
   constructor() {
     this.starships$
@@ -33,9 +35,9 @@ export class ResourcesStoreService {
       .pipe(distinctUntilChanged())
       .subscribe((playedStarships: Starship[]) => this.playedStarships = playedStarships);
 
-    this.playedCreatures$
+    this.counter$
       .pipe(distinctUntilChanged())
-      .subscribe((playedCreatures: Creature[]) => this.playedCreatures = playedCreatures);
+      .subscribe((counter: number[]) => this.counter = counter);
   }
 
 }

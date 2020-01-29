@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ResourcesService } from './services/resources.service';
 import { RESOURCES } from './constants/common.constants';
 import { GameplayService } from './services/gameplay.service';
-import { ResourcesStoreService } from './services/resources.store.service';
+import { AppStoreService } from './services/app.store.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   public resources = RESOURCES;
   public selectedResource = RESOURCES.STARSHIPS;
 
-  constructor(public resourcesStoreService: ResourcesStoreService,
+  constructor(public appStoreService: AppStoreService,
               private resourcesService: ResourcesService,
               private gameplayService: GameplayService) {
   }
@@ -35,9 +35,9 @@ export class AppComponent implements OnInit {
   public isCurrentResourceAvailable(): boolean {
     switch (this.selectedResource) {
       case RESOURCES.STARSHIPS:
-        return Boolean(this.resourcesStoreService.starships && this.resourcesStoreService.starships.length);
+        return Boolean(this.appStoreService.starships && this.appStoreService.starships.length);
       case RESOURCES.CREATURES:
-        return Boolean(this.resourcesStoreService.creatures && this.resourcesStoreService.creatures.length);
+        return Boolean(this.appStoreService.creatures && this.appStoreService.creatures.length);
       default:
         return false;
     }

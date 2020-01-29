@@ -10,7 +10,7 @@ import { CREATURE_COMPARABLE_ATTR, DEFAULT_PAGE_SIZE, RESOURCES, STARSHIP_COMPAR
 import { Creature } from '../interfaces/creature.interface';
 import { SetStarships } from '../actions/set-starships.action';
 import { SetCreatures } from '../actions/set-creatures.action';
-import { ResourcesStoreService } from './resources.store.service';
+import { AppStoreService } from './app.store.service';
 
 /**
  * Requests and data preparation related logic
@@ -21,7 +21,7 @@ import { ResourcesStoreService } from './resources.store.service';
 export class ResourcesService {
 
   constructor(private http: HttpClient,
-              private resourcesStoreService: ResourcesStoreService,
+              private appStoreService: AppStoreService,
               private store: Store) {
   }
 
@@ -68,12 +68,12 @@ export class ResourcesService {
   public loadResourseIfNotLoaded(resource: string) {
     switch (resource) {
       case RESOURCES.STARSHIPS:
-        if (!this.resourcesStoreService.starships || !this.resourcesStoreService.starships.length) {
+        if (!this.appStoreService.starships || !this.appStoreService.starships.length) {
           this.loadStarships();
         }
         break;
       case RESOURCES.CREATURES:
-        if (!this.resourcesStoreService.creatures || !this.resourcesStoreService.creatures.length) {
+        if (!this.appStoreService.creatures || !this.appStoreService.creatures.length) {
           this.loadCreatures();
         }
         break;
