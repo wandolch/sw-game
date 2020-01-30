@@ -35,6 +35,10 @@ export class AppStoreService {
       .pipe(distinctUntilChanged())
       .subscribe((playedStarships: Starship[]) => this.playedStarships = playedStarships);
 
+    this.playedCreatures$
+      .pipe(distinctUntilChanged())
+      .subscribe((playedCreatures: Creature[]) => this.playedCreatures = playedCreatures);
+
     this.counter$
       .pipe(distinctUntilChanged())
       .subscribe((counter: number[]) => this.counter = counter);

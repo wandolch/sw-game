@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { CREATURE_COMPARABLE_ATTR, RESOURCES, STARSHIP_COMPARABLE_ATTR } from '../constants/common.constants';
-import { Observable } from 'rxjs';
 import { Starship } from '../interfaces/starship.interface';
 import { Creature } from '../interfaces/creature.interface';
 import { Playable } from '../interfaces/playable.interface';
@@ -18,9 +17,6 @@ import { IncreaseCounter } from '../actions/increase-counter.action';
   providedIn: 'root'
 })
 export class GameplayService {
-
-  @Select(state => state.app.starships) starships: Observable<Starship[]>;
-  @Select(state => state.app.creatures) creatures: Observable<Creature[]>;
 
   constructor(private store: Store,
               private appStoreService: AppStoreService) {

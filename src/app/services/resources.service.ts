@@ -80,6 +80,17 @@ export class ResourcesService {
     }
   }
 
+  public isResourceAvailable(resource: string): boolean {
+    switch (resource) {
+      case RESOURCES.STARSHIPS:
+        return Boolean(this.appStoreService.starships && this.appStoreService.starships.length);
+      case RESOURCES.CREATURES:
+        return Boolean(this.appStoreService.creatures && this.appStoreService.creatures.length);
+      default:
+        return false;
+    }
+  }
+
   private getRequestsArray(pagesLeft: number, apiUrl: string): Observable<ResourcesResponse>[] {
     const requests = [];
     for (let i = 0; i < pagesLeft; i++) {

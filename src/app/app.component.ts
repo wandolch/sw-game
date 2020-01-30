@@ -33,13 +33,6 @@ export class AppComponent implements OnInit {
   }
 
   public isCurrentResourceAvailable(): boolean {
-    switch (this.selectedResource) {
-      case RESOURCES.STARSHIPS:
-        return Boolean(this.appStoreService.starships && this.appStoreService.starships.length);
-      case RESOURCES.CREATURES:
-        return Boolean(this.appStoreService.creatures && this.appStoreService.creatures.length);
-      default:
-        return false;
-    }
+    return this.resourcesService.isResourceAvailable(this.selectedResource);
   }
 }
